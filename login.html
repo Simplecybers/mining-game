@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - MyCrypto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            width: 300px;
+            text-align: center;
+        }
+        h1 {
+            color: #0061ff;
+            margin-bottom: 20px;
+        }
+        input[type="email"], input[type="password"], input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #0061ff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0051cc;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>MyCrypto</h1>
+        <form id="authForm" class="hidden">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <form id="twoFAForm" class="hidden">
+            <input type="text" id="twoFACode" placeholder="Enter 2FA Code" required>
+            <button type="submit">Verify</button>
+        </form>
+        <div class="footer">
+            <p>Don't have an account? <a href="#">Sign Up</a></p>
+        </div>
+    </div>
+
+    <script>
+        let isLoggedIn = false;
+
+        document.getElementById('authForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Basic validation
+            if (email && password) {
+                // Simulate successful login
+                alert('Login Successful! Please enter the 2FA code sent to your email.');
+                isLoggedIn = true;
+                document.getElementById('authForm').classList.add('hidden');
+                document.getElementById('twoFAForm').classList.remove('hidden');
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+        document.getElementById('twoFAForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const twoFACode = document.getElementById('twoFACode').value;
+
+            // Simulate 2FA code verification
+            if (isLoggedIn && twoFACode === '123456') { // Dummy code for demonstration
+                alert('2FA Verification Successful! Welcome to MyCrypto!');
+            } else {
+                alert('Invalid 2FA Code. Please try again.');
+            }
+        });
+
+        // Show the login form initially
+        document.getElementById('authForm').classList.remove('hidden');
+    </script>
+</body>
+</html>

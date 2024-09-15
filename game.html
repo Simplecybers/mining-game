@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Mining Game</title>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.24.1/dist/phaser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #282c34;
+            color: white;
+        }
+        .game-container {
+            margin-top: 50px;
+        }
+        .mine-btn {
+            padding: 20px;
+            background-color: #61dafb;
+            color: #282c34;
+            font-size: 24px;
+            border: none;
+            cursor: pointer;
+        }
+        .wallet-input {
+            margin-top: 20px;
+        }
+        .claim-rewards {
+            margin-top: 10px;
+            background-color: green;
+            padding: 10px;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Crypto Mining Game</h1>
+    <div id="phaser-game"></div>
+
+    <div class="wallet-input">
+        <input type="text" id="walletAddress" placeholder="Enter your wallet address">
+        <button class="claim-rewards" id="claimBtn">Claim Rewards</button>
+    </div>
+
+    <script>
+        let tokens = 0;
+        let walletAddress = '';
+
+        // Phaser Game Config
+        const config = {
+            type: Phaser.AUTO,
+            width: 800,
+            height: 600,
+            backgroundColor: '#282c34',
+            parent: 'phaser-game',
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            }
+        };
+
+        const game = new Phaser.Game(config);
+
+        function preload() {
+            // Load any assets here (e.g., images, sprites)
+        }
+
+        function create() {
+            const mineBtn = this.add.text(300, 250, 'Mine Crypto', { fontSize: '32px', fill: '#FFF' });
+            mineBtn.setInteractive();
+            mineBtn.on('pointerdown', mineCrypto);
+        }
+
+        function update() {
+            // Update game state
+        }
+
+        function mineCrypto() {
+            tokens += Math.floor(Math.random() * 10 + 1); // Random tokens earned
+            console.log(`You mined ${tokens} tokens`);
+            // Optionally, update the server here (send to backend)
+        }
+
+        // Claim rewards by sending to the backend
+        document.getElementById('claimBtn').addEventListener('click', async () => {
+            const wallet = document.getElementById('walletAddress').value;
+            if (wallet && tokens > 0) {
+                walletAddress = wallet;
+                const response = await fetch('/claim-rewards', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ tokens, walletAddress })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert(`Claimed ${tokens} tokens to wallet: ${walletAddress}`);
+                    tokens = 0; // Reset tokens after claim
+                } else {
+                    alert('Claim failed.');
+                }
+            } else {
+                alert('Please enter a valid wallet address and mine some tokens.');
+            }
+        });
+    </script>
+</body>
+</html>
