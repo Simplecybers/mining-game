@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin2Win - Win 500 USDT!</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="assets/logo.png" alt="Spin2Win Logo" class="logo">
+        <nav>
+            <a href="dashboard.html">Dashboard</a>
+            <a id="logout-btn">Logout</a>
+        </nav>
+    </header>
+
+    <section class="wheel-container">
+        <h1>SPIN TO WIN 🎡</h1>
+        <h2>Win up to <span>500 USDT</span>!</h2>
+        <div class="wheel-wrapper">
+            <img src="assets/wheel.jpeg" alt="Spin Wheel" id="spin-wheel">
+            <button id="spin-btn">SPIN NOW!</button>
+        </div>
+        <p id="spin-left">Spins left today: <span id="spin-count">3</span></p>
+    </section>
+
+    <div id="result-modal" class="modal">
+        <div class="modal-content">
+            <h2>Congratulations! 🎉</h2>
+            <p id="win-amount"></p>
+            <button id="payout-btn">Request Payout</button>
+            <button id="close-modal">Close</button>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
